@@ -56,12 +56,12 @@ header {
 /* Styling for messages sent by the user */
 #messages li.sent {
     align-self: flex-end;
-    background-color: #4a90e2;
-    color: white;
+    background-color: #ffffff; /* Changed to white for sent messages */
+    color: black;
 }
 
 #messages li.sent::before {
-    content: 'me';
+    content: 'ME'; /* Uppercase for "me" */
     position: absolute;
     top: -20px;
     right: 0;
@@ -73,39 +73,31 @@ header {
 /* Styling for messages received from other users */
 #messages li.received {
     align-self: flex-start;
-    background-color: #3e3f4b;
-    color: #e0e0e0;
+    background-color: #4a90e2; /* Changed to blue for received messages */
+    color: white;
     position: relative;
 }
 
 /* Adjust spacing for the username on the left */
 #messages li.received::before {
-    content: attr(data-user);
+    content: '●  ' attr(data-user); /* Added extra bullet before the username */
     position: absolute;
     top: -20px;
-    left: 10px; /* Adjusted to move closer to the dot */
+    left: 10px;
     font-size: 12px;
     font-weight: bold;
-    color: #c5c6c7;
+    color: white; /* Name and bullet in white */
 }
 
-/* White dot (bullet point) for received messages */
-#messages li.received::after {
-    content: '●';
-    position: absolute;
-    top: 5px; /* Adjusted for better alignment */
-    left: -30px; /* Moved closer to the message box */
-    font-size: 10px;
-    color: white;
-}
-
-/* Timestamp style */
+/* Timestamps outside the message bubble */
 .timestamp {
     font-size: 10px;
     font-weight: bold;
     margin-top: 5px;
-    text-align: center; /* Center the timestamp */
+    text-align: right;
     color: #c5c6c7;
+    position: absolute;
+    bottom: -20px; /* Move the timestamp below the message bubble */
 }
 
 /* Input area styling similar to ChatGPT */

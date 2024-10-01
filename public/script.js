@@ -17,10 +17,12 @@ fileBtn.addEventListener('click', () => {
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (input.value || fileInput.files.length > 0) {
+        const now = new Date();
+        const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`; // Format HH:MM
         const message = {
             text: input.value,
             user: username,
-            time: new Date().toLocaleTimeString(),
+            time: timeString,
         };
 
         // If a file is selected, convert it to base64 and send it
