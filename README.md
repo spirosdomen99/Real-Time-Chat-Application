@@ -71,7 +71,9 @@ Open your browser and navigate to:
 http://localhost:3000
 ```
 
-You can open multiple tabs or browsers to simulate multiple users chatting in real-time.
+You can open two tabs or browsers to simulate multiple users chatting in real-time.
+Tab no.1  :  http://localhost:3000/?user=user_1
+Tab no.2  :  http://localhost:3000/?user=user_2
 
 ---
 
@@ -156,13 +158,17 @@ You can also deploy the application online using platforms like **Render**, **He
 
 ```bash
 real-time-chat-application/
-├── public/                  # Public directory for static files like icons
-├── index.html               # Main HTML file for the chat interface
-├── styles.css               # CSS for styling the chat application
-├── script.js                # Client-side JavaScript logic (handles chat, files, emojis)
-├── server.js                # Node.js server using Express and Socket.IO
-├── package.json             # Project metadata and dependencies
-└── README.md                # Project documentation (this file)
+│
+├── public/              # Frontend assets
+│   ├── icons/           # All icon assets
+│   ├── index.html       # Main HTML file
+│   ├── styles.css       # CSS for styling
+│   └── script.js        # Client-side JS
+│
+├── server.js            # Main Node.js server
+├── package.json         # Project dependencies and metadata
+└── .gitignore           # Files to ignore in Git
+
 ```
 
 ---
@@ -177,11 +183,6 @@ real-time-chat-application/
 
 ---
 
-## License
-
-This project is licensed under the MIT License.
-
----
 
 ## Author
 
