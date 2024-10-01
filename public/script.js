@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         li.classList.add(msg.user === username ? 'sent' : 'received');
         li.classList.add(isUserOnline[msg.user] ? 'online' : 'offline');
     
-        const nameHTML = `<span class="name">${msg.user === username ? 'ME' : 'FRIEND'} <span class="dot">●</span></span>`;
+        const nameHTML = `<span class="name">${msg.user === username ? 'ME' : 'FRIEND'} <span class="dot"> ●</span></span>`;
     
         const lastMessage = messages.lastElementChild;
         if (!lastMessage || lastMessage.getAttribute('data-user') !== msg.user) {

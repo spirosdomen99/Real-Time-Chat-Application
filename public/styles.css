@@ -165,7 +165,7 @@ button:hover img {
     right: 0;
     font-size: 12px;
     font-weight: bold;
-    color: #2f87ec; /* Light blue for 'ME' on the right */
+    color: #00ccff; /* Light blue for 'ME' on the right */
 }
 
 #messages li.sent.online .dot {
@@ -179,7 +179,7 @@ button:hover img {
 /* Received Messages (left) */
 #messages li.received {
     align-self: flex-start;
-    background-color: #ee8700;
+    background-color: #c0650a;
     color: white;
     position: relative;
 }
