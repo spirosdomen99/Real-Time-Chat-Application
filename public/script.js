@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Receive and display chat message
+    /// Receive and display chat message
     socket.on('chatMessage', (msg) => {
         const li = document.createElement('li');
         li.classList.add(msg.user === username ? 'sent' : 'received');
@@ -91,9 +91,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Check if the last message is from a different user
         const lastMessage = messages.lastElementChild;
         if (!lastMessage || lastMessage.getAttribute('data-user') !== msg.user) {
-            li.classList.add('show-name'); // Show name if it's a new user or first message
+            li.classList.add('show-name'); // Show name if it's a new user or the first message
         } else {
-            lastMessage.querySelector('.timestamp').style.display = 'none'; // Hide timestamp for non-final messages
+            // Remove timestamp from the previous message of the same user
+            lastMessage.querySelector('.timestamp').style.display = 'none';
         }
 
         li.setAttribute('data-user', msg.user);
@@ -102,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ${msg.file ? `<br><i>File: <a href="${msg.file.data}" download="${msg.file.name}">${msg.file.name}</a></i>` : ''}
             <div class="timestamp">${msg.time}</div>
         `;
-        
+
         messages.appendChild(li);
         messages.scrollTop = messages.scrollHeight; // Scroll to the bottom of the chat
     });

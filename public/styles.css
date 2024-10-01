@@ -148,65 +148,58 @@ button:hover img {
 
 /* Sent Messages (right) */
 #messages li.sent.show-name::before {
-    content: '● ME'; /* Dot before "ME" */
+    content: '●'; /* Only the dot is in the pseudo-element */
+    position: absolute;
+    top: -20px;
+    right: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#messages li.sent .name {
     position: absolute;
     top: -20px;
     right: 0;
     font-size: 12px;
     font-weight: bold;
-    color: white; /* Ensure name stays white */
+    color: white; /* Name stays white */
 }
 
 #messages li.sent.online::before {
-    content: '● ME'; /* Dot before "ME" */
-    position: absolute;
-    top: -20px;
-    right: 0;
-    font-size: 12px;
-    font-weight: bold;
     color: green; /* Green dot for online status */
 }
 
 #messages li.sent.offline::before {
-    content: '● ME'; /* Dot before "ME" */
-    position: absolute;
-    top: -20px;
-    right: 0;
-    font-size: 12px;
-    font-weight: bold;
     color: red; /* Red dot for offline status */
 }
 
 /* Received Messages (left) */
 #messages li.received.show-name::before {
-    content: 'FRIEND ●'; /* Dot after "FRIEND" */
+    content: '●'; /* Only the dot is in the pseudo-element */
     position: absolute;
     top: -20px;
     left: 10px;
     font-size: 12px;
     font-weight: bold;
-    color: white; /* Ensure name stays white */
+}
+
+#messages li.received .name {
+    position: absolute;
+    top: -20px;
+    left: 30px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white; /* Name stays white */
 }
 
 #messages li.received.online::before {
-    content: 'FRIEND ●'; /* Dot after "FRIEND" */
-    position: absolute;
-    top: -20px;
-    left: 10px;
-    font-size: 12px;
-    font-weight: bold;
     color: green; /* Green dot for online status */
 }
 
 #messages li.received.offline::before {
-    content: 'FRIEND ●'; /* Dot after "FRIEND" */
-    position: absolute;
-    top: -20px;
-    left: 10px;
-    font-size: 12px;
-    font-weight: bold;
     color: red; /* Red dot for offline status */
 }
+
 
 
 /* Timestamps */
