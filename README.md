@@ -41,7 +41,7 @@ Follow these steps to set up and run the application on your machine.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/real-time-chat-application.git
+git clone https://github.com/spirosdomen99/real-time-chat-application.git
 cd real-time-chat-application
 ```
 
