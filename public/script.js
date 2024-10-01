@@ -10,12 +10,33 @@ const fileBtn = document.getElementById('file-btn');
 const emojiBtn = document.getElementById('emoji-btn');
 const emojiPicker = document.getElementById('emoji-picker');
 
+// Emoji options
+const emojis = ['😊', '😂', '😍', '😢', '😡' , '😱' , '👍' , '👎', '🔥' , '❤️'];// Generate emoji picker buttons
+    emojis.forEach(emoji => {
+        const emojiButton = document.createElement('button');
+        emojiButton.textContent = emoji;
+        emojiButton.onclick = () => {
+            input.value += emoji;
+        };
+        emojiPicker.appendChild(emojiButton);
+    });
+
 // Track user connection status
 let isUserOnline = { user_1: false, user_2: false };
 
 // Handle file button click
 fileBtn.addEventListener('click', () => {
     fileInput.click(); // Open file input dialog
+});
+
+// Generate emoji picker buttons
+emojis.forEach(emoji => {
+    const emojiButton = document.createElement('button');
+    emojiButton.textContent = emoji;
+    emojiButton.onclick = () => {
+        input.value += emoji;
+    };
+    emojiPicker.appendChild(emojiButton);
 });
 
 // Handle emoji button click (toggle emoji picker)

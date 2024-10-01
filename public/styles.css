@@ -179,6 +179,25 @@ footer {
     filter: brightness(1) invert(0.8); /* Hover effect for emoji button */
 }
 
+
+.emoji-picker {
+    display: none;
+    position: absolute;
+    bottom: 60px;
+    left: 10px;
+    background-color: #303136;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.emoji-picker button {
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    margin: 5px;
+}
+
 /* Placeholder */
 #message-input::placeholder {
     color: #9a9a9a;
