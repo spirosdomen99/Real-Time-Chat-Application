@@ -1,20 +1,34 @@
-<!-- public/index.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Chat App</title>
+    <title>Minimal Real-Time Chat</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="chat-container">
+        <header>
+            <h1 class="chat-title">Minimal Chat</h1>
+            <div class="user-status">
+                <span id="user1-name">user_1</span>
+                <span class="status-dot" id="user1-status"></span>
+            </div>
+            <div class="user-status">
+                <span id="user2-name">user_2</span>
+                <span class="status-dot" id="user2-status"></span>
+            </div>
+        </header>
+        
         <ul id="messages"></ul>
-        <form id="chat-form">
-            <input id="message-input" autocomplete="off" placeholder="Type a message" />
-            <button type="submit">Send</button>
-        </form>
+
+        <footer>
+            <form id="chat-form">
+                <input id="message-input" autocomplete="off" placeholder="Type a message or :emoji:" />
+                <input type="file" id="file-input" />
+                <button type="submit">Send</button>
+            </form>
+        </footer>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
