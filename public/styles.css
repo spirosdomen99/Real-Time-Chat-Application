@@ -92,6 +92,14 @@ button:hover img {
     margin-right: 10px;
 }
 
+#file-preview {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #9a9a9a;
+    text-align: left;
+}
+
+
 #send-btn,
 #emoji-btn {
     margin-left: 10px;
