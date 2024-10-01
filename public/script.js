@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('file-input');
     const fileBtn = document.getElementById('file-btn');
     const messages = document.getElementById('messages');
+
     let selectedFile = null;
 
     // Handle emoji picker
@@ -18,19 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.click();
     });
 
-    // When a file is selected, show the file preview above the attachment button
+    // When a file is selected, show the file name and mark it ready to be sent
     fileInput.addEventListener('change', () => {
         if (fileInput.files.length > 0) {
             selectedFile = fileInput.files[0];
-            const existingPreview = document.querySelector('.file-preview');
-            if (existingPreview) {
-                existingPreview.remove(); // Remove the old preview if any
-            }
-
-            const filePreview = document.createElement('div');
-            filePreview.classList.add('file-preview');
-            filePreview.textContent = `Selected file: ${selectedFile.name} (Ready to send)`;
-            document.querySelector('.input-container').appendChild(filePreview);
+            const fileNameDisplay = document.createElement('div');
+            fileNameDisplay.classList.add('file-ready');
+            fileNameDisplay.textContent = `Selected file: ${selectedFile.name} (Ready to send)`;
+            document.querySelector('.input-container').appendChild(fileNameDisplay);
         }
     });
 
@@ -60,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     };
                     socket.emit('chatMessage', message);
                     selectedFile = null; // Clear the file after sending
-                    document.querySelector('.file-preview').remove(); // Remove file preview after sending
+                    document.querySelector('.file-ready').remove(); // Remove file display after sending
                     fileInput.value = ''; // Clear the file input
                 };
                 reader.readAsDataURL(selectedFile);
