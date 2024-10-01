@@ -36,7 +36,7 @@ header {
 
 /* Chat Form and Input Area */
 form {
-    width: 75%;
+    width: 70%;
 }
 
 .input-container {
@@ -95,7 +95,7 @@ button:hover img {
 .file-ready {
     margin-left: 10px;
     font-size: 12px;
-    color: #4a90e2; /* Same as the received message color */
+    color: #1fe005; /* Same as the received message color */
 }
 
 #send-btn,
@@ -165,11 +165,11 @@ button:hover img {
     right: 0;
     font-size: 12px;
     font-weight: bold;
-    color: #4a90e2; /* Light blue for 'ME' on the right */
+    color: #2f87ec; /* Light blue for 'ME' on the right */
 }
 
 #messages li.sent.online .dot {
-    color: green; /* Green dot for online status */
+    color: rgb(24, 191, 24); /* Green dot for online status */
 }
 
 #messages li.sent.offline .dot {
@@ -179,7 +179,7 @@ button:hover img {
 /* Received Messages (left) */
 #messages li.received {
     align-self: flex-start;
-    background-color: #4a90e2;
+    background-color: #ee8700;
     color: white;
     position: relative;
 }
@@ -194,7 +194,7 @@ button:hover img {
 }
 
 #messages li.received.online .dot {
-    color: green; /* Green dot for online status */
+    color: rgb(24, 191, 24); /* Green dot for online status */
 }
 
 #messages li.received.offline .dot {
@@ -205,7 +205,7 @@ button:hover img {
 .timestamp {
     font-size: 10px;
     font-weight: bold;
-    color: #c5c6c7;
+    color: #cdcecf;
     position: absolute;
     bottom: -20px; /* Positioned below the message bubble */
     right: 0;
