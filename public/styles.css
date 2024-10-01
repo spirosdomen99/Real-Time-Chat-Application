@@ -78,11 +78,12 @@ header {
     position: relative;
 }
 
+/* Adjust spacing for the username on the left */
 #messages li.received::before {
-    content: attr(data-user); /* Displays user name like "user_2" */
+    content: attr(data-user);
     position: absolute;
     top: -20px;
-    left: 30px;
+    left: 10px; /* Adjusted to move closer to the dot */
     font-size: 12px;
     font-weight: bold;
     color: #c5c6c7;
@@ -92,8 +93,8 @@ header {
 #messages li.received::after {
     content: '●';
     position: absolute;
-    top: 0;
-    left: -20px;
+    top: 5px; /* Adjusted for better alignment */
+    left: -30px; /* Moved closer to the message box */
     font-size: 10px;
     color: white;
 }
@@ -103,7 +104,7 @@ header {
     font-size: 10px;
     font-weight: bold;
     margin-top: 5px;
-    text-align: right;
+    text-align: center; /* Center the timestamp */
     color: #c5c6c7;
 }
 
@@ -118,22 +119,29 @@ footer {
 
 .input-container {
     width: 100%;
-    max-width: 750px; /* Matches the length in the provided image */
+    max-width: 750px; /* Ensures the input bar matches the desired width */
     display: flex;
     align-items: center;
-    background-color: #40414f;
-    border-radius: 8px;
-    padding: 10px;
+    background-color: #303136; /* Match the color from the image */
+    border-radius: 24px; /* Rounded input bar */
+    padding: 10px 15px; /* Adjusted padding for a better fit */
 }
 
 #message-input {
     flex: 1;
     padding: 10px;
-    background-color: #303136;
+    background-color: #40414f;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     margin-right: 10px;
+    font-size: 14px; /* Adjusted font size for a better fit */
+}
+
+/* Tweak the input placeholder style */
+#message-input::placeholder {
+    color: #9a9a9a; /* Lighter placeholder color */
+    font-size: 14px;
 }
 
 /* Button styling similar to ChatGPT */
@@ -148,11 +156,44 @@ button {
     cursor: pointer;
 }
 
-button:hover {
-    opacity: 0.7;
-}
-
-.icon-button {
+button img {
     width: 24px;
     height: 24px;
+    filter: brightness(0.8); /* Match the icon style */
+}
+
+button:hover img {
+    filter: brightness(1); /* Brighten on hover to give feedback */
+}
+
+/* Specific styling for the attachment button */
+#file-btn {
+    background-color: transparent;
+    border: none;
+    margin-right: 10px; /* Add some space between the attachment button and input field */
+}
+
+/* Specific styling for the send button */
+#send-btn {
+    background-color: transparent;
+    border: none;
+}
+
+/* Emoji picker styling */
+.emoji-picker {
+    display: none;
+    position: absolute;
+    bottom: 60px;
+    left: 10px;
+    background-color: #303136;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.emoji-picker button {
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    margin: 5px;
 }
