@@ -1,19 +1,16 @@
 // public/script.js
 
 const socket = io();
-let username = window.location.href.includes('user_1') ? 'user_1' : 'user_2';
+let username = window.location.href.includes('user_1') ? 'user_1' : 'user_2'; // Identify the user based on URL
 const form = document.getElementById('chat-form');
 const input = document.getElementById('message-input');
 const fileInput = document.getElementById('file-input');
 const messages = document.getElementById('messages');
-const emojiBtn = document.getElementById('emoji-btn');
-const emojiPicker = document.getElementById('emoji-picker');
 const fileBtn = document.getElementById('file-btn');
-const sendBtn = document.getElementById('send-btn');
 
 // Handle file button click
 fileBtn.addEventListener('click', () => {
-    fileInput.click(); // Trigger file input dialog
+    fileInput.click(); // Open file input dialog
 });
 
 // Send chat message (including file if selected)
@@ -38,7 +35,7 @@ form.addEventListener('submit', (e) => {
                     type: file.type
                 };
                 socket.emit('chatMessage', message); // Send message with file
-                fileInput.value = ''; // Clear file input
+                fileInput.value = ''; // Clear the file input
             };
 
             reader.readAsDataURL(file); // Convert file to base64
