@@ -72,7 +72,9 @@ http://localhost:3000
 ```
 
 You can open two tabs or browsers to simulate multiple users chatting in real-time.
+
 Tab no.1  :  http://localhost:3000/?user=user_1
+
 Tab no.2  :  http://localhost:3000/?user=user_2
 
 ---
