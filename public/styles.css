@@ -146,56 +146,48 @@ button:hover img {
 }
 
 /* Sent Messages (right) */
-#messages li.sent.show-name::before {
-    content: '●'; /* Dot only */
-    position: absolute;
-    top: -20px;
-    right: 20px;
-    font-size: 12px;
-    font-weight: bold;
+#messages li.sent {
+    align-self: flex-end;
+    background-color: #ffffff;
+    color: black;
 }
 
-#messages li.sent .name {
-    position: absolute;
-    top: -20px;
-    right: 0;
+#messages li.sent.show-name .name {
+    position: relative;
     font-size: 12px;
     font-weight: bold;
-    color: white; /* Ensure name stays white */
+    color: white;
+    text-align: right;
 }
 
-#messages li.sent.online::before {
+#messages li.sent.online .dot {
     color: green; /* Green dot for online status */
 }
 
-#messages li.sent.offline::before {
+#messages li.sent.offline .dot {
     color: red; /* Red dot for offline status */
 }
 
 /* Received Messages (left) */
-#messages li.received.show-name::before {
-    content: '●'; /* Dot only */
-    position: absolute;
-    top: -20px;
-    left: 10px;
-    font-size: 12px;
-    font-weight: bold;
+#messages li.received {
+    align-self: flex-start;
+    background-color: #4a90e2;
+    color: white;
 }
 
-#messages li.received .name {
-    position: absolute;
-    top: -20px;
-    left: 30px;
+#messages li.received.show-name .name {
+    position: relative;
     font-size: 12px;
     font-weight: bold;
-    color: white; /* Ensure name stays white */
+    color: white;
+    text-align: left;
 }
 
-#messages li.received.online::before {
+#messages li.received.online .dot {
     color: green; /* Green dot for online status */
 }
 
-#messages li.received.offline::before {
+#messages li.received.offline .dot {
     color: red; /* Red dot for offline status */
 }
 
@@ -203,24 +195,10 @@ button:hover img {
 .timestamp {
     font-size: 10px;
     font-weight: bold;
-    margin-top: 5px;
     color: #c5c6c7;
-    position: absolute;
-    bottom: -20px; /* Positioned below the message */
-}
-
-#messages li.sent .timestamp {
     text-align: right;
-    right: 0; /* Far right for sent messages */
-}
-
-#messages li.received .timestamp {
-    text-align: left;
-    left: 0; /* Far left for received messages */
-}
-
-#messages li:not(.show-name) .timestamp {
-    display: none; /* Hide timestamps for consecutive messages by the same user */
+    margin-top: 5px;
+    display: block;
 }
 
 /* Footer and Chat Input Bar */

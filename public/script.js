@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     emojis.forEach(emoji => {
         const emojiButton = document.createElement('button');
         emojiButton.textContent = emoji;
-        emojiButton.classList.add('emoji'); // Optional for styling
+        emojiButton.classList.add('emoji');
         emojiButton.onclick = () => {
             input.value += emoji;
             emojiPicker.style.display = 'none'; // Hide emoji picker after selection
@@ -88,21 +88,22 @@ document.addEventListener('DOMContentLoaded', () => {
         li.classList.add(msg.user === username ? 'sent' : 'received');
         li.classList.add(isUserOnline[msg.user] ? 'online' : 'offline');
         
+        const nameHTML = `<span class="name">${msg.user === username ? 'ME' : 'FRIEND'} <span class="dot">●</span></span>`;
+
         // Check if the last message is from a different user
         const lastMessage = messages.lastElementChild;
         if (!lastMessage || lastMessage.getAttribute('data-user') !== msg.user) {
             li.classList.add('show-name'); // Show name if it's a new user or first message
+            li.innerHTML = `${nameHTML}<br>${msg.text}`;
         } else {
-            lastMessage.querySelector('.timestamp').style.display = 'none'; // Hide timestamp for non-final messages
+            li.innerHTML = `${msg.text}`;
         }
 
+        // Add timestamp
+        li.innerHTML += `<div class="timestamp">${msg.time}</div>`;
+
         li.setAttribute('data-user', msg.user);
-        li.innerHTML = `
-            ${msg.text} 
-            ${msg.file ? `<br><i>File: <a href="${msg.file.data}" download="${msg.file.name}">${msg.file.name}</a></i>` : ''}
-            <div class="timestamp">${msg.time}</div>
-        `;
-        
+
         messages.appendChild(li);
         messages.scrollTop = messages.scrollHeight; // Scroll to the bottom of the chat
     });
