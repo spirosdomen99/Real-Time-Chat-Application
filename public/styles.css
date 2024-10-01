@@ -101,7 +101,7 @@ button:hover img {
 .emoji-picker {
     display: none; /* Initially hidden */
     position: absolute;
-    bottom: 18.5%;
+    bottom: 10%;
     left: 71%; /* Align it with the center of the emoji button */
     transform: translateX(-50%); /* Center it properly */
     background-color: #303136;
