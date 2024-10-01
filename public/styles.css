@@ -1,13 +1,14 @@
 /* public/styles.css */
 
 body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f2f2f2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #343541;
+    color: #e0e0e0;
     margin: 0;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 #chat-container {
@@ -16,44 +17,22 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #40414f;
+    border-radius: 8px;
 }
 
 header {
-    background-color: #333;
+    background-color: #202123;
     color: white;
-    padding: 10px;
+    padding: 20px;
     text-align: center;
-    position: relative;
+    border-bottom: 1px solid #565869;
 }
 
 .chat-title {
     margin: 0;
-    font-size: 24px;
-    font-weight: 300;
-}
-
-.user-status {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-}
-
-.user-status:not(:last-child) {
-    top: 40px;
-}
-
-.status-dot {
-    width: 10px;
-    height: 10px;
-    background-color: red; /* Default is offline */
-    border-radius: 50%;
-    margin-left: 5px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 #messages {
@@ -61,63 +40,93 @@ header {
     list-style: none;
     padding: 20px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 #messages li {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 10px;
-    max-width: 70%;
+    max-width: 60%;
     word-wrap: break-word;
-    position: relative;
-    display: flex;
-    flex-direction: column;
 }
 
 #messages li.sent {
     align-self: flex-end;
-    background-color: #cce5ff;
-    color: #333;
+    background-color: #4a90e2;
+    color: white;
 }
 
 #messages li.received {
     align-self: flex-start;
-    background-color: #e2e2e2;
-    color: #333;
+    background-color: #3e3f4b;
+    color: #e0e0e0;
+    position: relative;
 }
 
-.timestamp {
+#messages li.received::after {
+    content: attr(data-user);
+    position: absolute;
+    top: -20px;
+    left: 0;
     font-size: 12px;
-    margin-top: 5px;
-    text-align: right;
-    color: #888;
+    color: #c5c6c7;
 }
 
 footer {
-    background-color: #f7f7f7;
+    background-color: #202123;
     padding: 10px;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #565869;
+    display: flex;
+    justify-content: center;
+}
+
+.input-container {
+    width: 100%;
     display: flex;
     align-items: center;
+    background-color: #40414f;
+    border-radius: 8px;
+    padding: 10px;
 }
 
 #message-input {
     flex: 1;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 10px;
-}
-
-#file-input {
+    background-color: #303136;
+    color: white;
+    border: none;
+    border-radius: 8px;
     margin-right: 10px;
 }
 
 button {
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
+    background-color: transparent;
     border: none;
-    border-radius: 4px;
+    font-size: 24px;
     cursor: pointer;
+    color: #e0e0e0;
+}
+
+button:hover {
+    color: #4a90e2;
+}
+
+.emoji-picker {
+    display: none;
+    position: absolute;
+    bottom: 60px;
+    left: 10px;
+    background-color: #303136;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.emoji-picker button {
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    margin: 5px;
 }

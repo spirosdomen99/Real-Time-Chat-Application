@@ -3,30 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimal Real-Time Chat</title>
+    <title>Real-Time Chat Demo</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="chat-container">
         <header>
-            <h1 class="chat-title">Minimal Chat</h1>
-            <div class="user-status">
-                <span id="user1-name">user_1</span>
-                <span class="status-dot" id="user1-status"></span>
-            </div>
-            <div class="user-status">
-                <span id="user2-name">user_2</span>
-                <span class="status-dot" id="user2-status"></span>
-            </div>
+            <h1 class="chat-title">Real-Time Chat Demo</h1>
         </header>
         
         <ul id="messages"></ul>
 
         <footer>
             <form id="chat-form">
-                <input id="message-input" autocomplete="off" placeholder="Type a message or :emoji:" />
-                <input type="file" id="file-input" />
-                <button type="submit">Send</button>
+                <div class="input-container">
+                    <button type="button" id="emoji-btn">😊</button>
+                    <input id="message-input" autocomplete="off" placeholder="Type a message..." />
+                    <input type="file" id="file-input" style="display: none;" />
+                    <button type="button" id="file-btn">📎</button>
+                    <button type="submit" id="send-btn">➡️</button>
+                </div>
+                <div id="emoji-picker" class="emoji-picker"></div>
             </form>
         </footer>
     </div>

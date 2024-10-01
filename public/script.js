@@ -6,17 +6,26 @@ const form = document.getElementById('chat-form');
 const input = document.getElementById('message-input');
 const fileInput = document.getElementById('file-input');
 const messages = document.getElementById('messages');
-const user1Status = document.getElementById('user1-status');
-const user2Status = document.getElementById('user2-status');
+const emojiBtn = document.getElementById('emoji-btn');
+const emojiPicker = document.getElementById('emoji-picker');
+const sendBtn = document.getElementById('send-btn');
 
-// Update the user status when a user connects or disconnects
-socket.on('connect', () => {
-    socket.emit('userConnected', username);
+// Emoji options
+const emojis = ['😊', '😂', '😍', '😢', '👍', '🙏', '🎉', '🔥'];
+
+// Generate emoji picker buttons
+emojis.forEach(emoji => {
+    const emojiButton = document.createElement('button');
+    emojiButton.textContent = emoji;
+    emojiButton.onclick = () => {
+        input.value += emoji;
+    };
+    emojiPicker.appendChild(emojiButton);
 });
 
-socket.on('userStatus', (users) => {
-    user1Status.style.backgroundColor = users['user_1'] ? 'green' : 'red';
-    user2Status.style.backgroundColor = users['user_2'] ? 'green' : 'red';
+// Toggle emoji picker visibility
+emojiBtn.addEventListener('click', () => {
+    emojiPicker.style.display = emojiPicker.style.display === 'block' ? 'none' : 'block';
 });
 
 // Send chat message
@@ -32,22 +41,16 @@ form.addEventListener('submit', (e) => {
         socket.emit('chatMessage', message);
         input.value = '';
         fileInput.value = '';
+        emojiPicker.style.display = 'none';
     }
 });
 
-// Display chat message with timestamp
+// Display chat message
 socket.on('chatMessage', (msg) => {
     const li = document.createElement('li');
     li.classList.add(msg.user === username ? 'sent' : 'received');
+    li.setAttribute('data-user', msg.user);
     li.innerHTML = `${msg.text} ${msg.file ? `<br><i>File: ${msg.file}</i>` : ''}<div class="timestamp">${msg.time}</div>`;
     messages.appendChild(li);
     messages.scrollTop = messages.scrollHeight;
-});
-
-// Handle user disconnection
-socket.on('userDisconnected', (user) => {
-    const li = document.createElement('li');
-    li.classList.add('received');
-    li.innerHTML = `<i>${user} has left the chat</i>`;
-    messages.appendChild(li);
 });
