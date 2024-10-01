@@ -7,6 +7,8 @@ const input = document.getElementById('message-input');
 const fileInput = document.getElementById('file-input');
 const messages = document.getElementById('messages');
 const fileBtn = document.getElementById('file-btn');
+const emojiBtn = document.getElementById('emoji-btn');
+const emojiPicker = document.getElementById('emoji-picker');
 
 // Track user connection status
 let isUserOnline = { user_1: false, user_2: false };
@@ -14,6 +16,11 @@ let isUserOnline = { user_1: false, user_2: false };
 // Handle file button click
 fileBtn.addEventListener('click', () => {
     fileInput.click(); // Open file input dialog
+});
+
+// Handle emoji button click (toggle emoji picker)
+emojiBtn.addEventListener('click', () => {
+    emojiPicker.style.display = emojiPicker.style.display === 'block' ? 'none' : 'block'; // Toggle display
 });
 
 // Send chat message (including file if selected)
@@ -57,6 +64,13 @@ socket.on('chatMessage', (msg) => {
     const li = document.createElement('li');
     li.classList.add(msg.user === username ? 'sent' : 'received');
     li.classList.add(isUserOnline[msg.user] ? 'online' : 'offline');
+    
+    // Check if the last message was from the same user
+    const lastMessage = messages.lastElementChild;
+    if (!lastMessage || lastMessage.getAttribute('data-user') !== msg.user) {
+        li.classList.add('show-name'); // Show name if it's the first message from this user
+    }
+
     li.setAttribute('data-user', msg.user);
     li.innerHTML = `${msg.text} ${msg.file ? `<br><i>File: <a href="${msg.file.data}" download="${msg.file.name}">${msg.file.name}</a></i>` : ''}<div class="timestamp">${msg.time}</div>`;
     messages.appendChild(li);
