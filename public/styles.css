@@ -10,6 +10,10 @@ body {
     align-items: center;
 }
 
+form{
+    width: 75%;
+}
+
 #chat-container {
     width: 100%;
     max-width: 1000px; /* Expanded the width of the entire chat */
