@@ -184,23 +184,34 @@ footer {
     filter: brightness(1) invert(0.8); /* Hover effect for emoji button */
 }
 
+/* Emoji picker styling */
 .emoji-picker {
-    display: none;
+    display: none; /* Initially hidden */
     position: absolute;
-    bottom: 60px;
-    left: 10px;
+    bottom: 60px; /* Position it above the input bar */
+    right: 10px;  /* Adjust this based on the placement of your input bar */
     background-color: #303136;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    max-width: 300px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 emojis per row */
+    grid-gap: 5px;
+    z-index: 10; /* Ensure it stays above other elements */
 }
 
-.emoji-picker button {
+.emoji-picker button.emoji {
     background-color: transparent;
     border: none;
-    font-size: 18px;
-    margin: 5px;
+    font-size: 24px;
+    cursor: pointer;
 }
+
+.emoji-picker button.emoji:hover {
+    opacity: 0.8;
+}
+
 
 /* Placeholder */
 #message-input::placeholder {
