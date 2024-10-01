@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('file-input');
     const fileBtn = document.getElementById('file-btn');
     const messages = document.getElementById('messages');
+    
+    let selectedFile = null;
 
     // User status
     let username = window.location.href.includes('user_1') ? 'user_1' : 'user_2';
@@ -40,6 +42,24 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.click();
     });
 
+     // When a file is selected, show the file name with a checkmark to indicate it's ready
+     fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            selectedFile = fileInput.files[0];
+
+            const filePreview = document.createElement('div');
+            filePreview.classList.add('file-ready');
+            filePreview.textContent = `${selectedFile.name} ✔ (Ready to send)`;
+
+            const existingPreview = document.querySelector('.file-ready');
+            if (existingPreview) {
+                existingPreview.remove(); // Remove old preview if a new file is selected
+            }
+
+            document.querySelector('.input-container').appendChild(filePreview);
+        }
+    });
+
     // Socket.io connection (assuming it's set up)
     const socket = io();
 
@@ -57,21 +77,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 time: timeString
             };
 
-            if (fileInput.files.length > 0) {
-                const file = fileInput.files[0];
+            if (selectedFile) {
                 const reader = new FileReader();
-
                 reader.onload = () => {
                     message.file = {
-                        name: file.name,
-                        data: reader.result, // Base64-encoded file data
-                        type: file.type
+                        name: selectedFile.name,
+                        data: reader.result,
+                        type: selectedFile.type
                     };
                     socket.emit('chatMessage', message);
+                    selectedFile = null; // Clear the file after sending
+                    document.querySelector('.file-ready').remove(); // Remove file preview after sending
                     fileInput.value = ''; // Clear the file input
                 };
-
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(selectedFile);
             } else {
                 socket.emit('chatMessage', message);
             }

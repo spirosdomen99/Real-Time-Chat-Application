@@ -92,6 +92,12 @@ button:hover img {
     margin-right: 10px;
 }
 
+.file-ready {
+    margin-left: 10px;
+    font-size: 12px;
+    color: #4a90e2; /* Same as the received message color */
+}
+
 #send-btn,
 #emoji-btn {
     margin-left: 10px;
