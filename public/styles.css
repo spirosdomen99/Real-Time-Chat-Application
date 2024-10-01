@@ -12,7 +12,7 @@ body {
 
 #chat-container {
     width: 100%;
-    max-width: 800px;
+    max-width: 1000px; /* Expanded the width of the entire chat */
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -61,13 +61,21 @@ header {
 }
 
 #messages li.sent::before {
-    content: 'ME'; /* Uppercase for "me" */
+    content: '● ME'; /* Added dot before "ME" to represent online/offline status */
     position: absolute;
     top: -20px;
     right: 0;
     font-size: 12px;
     font-weight: bold;
     color: #c5c6c7;
+}
+
+#messages li.sent.offline::before {
+    color: red; /* Red dot when offline */
+}
+
+#messages li.sent.online::before {
+    color: green; /* Green dot when online */
 }
 
 /* Styling for messages received from other users */
@@ -80,13 +88,21 @@ header {
 
 /* Adjust spacing for the username on the left */
 #messages li.received::before {
-    content: '●  ' attr(data-user); /* Added extra bullet before the username */
+    content: 'FRIEND ●'; /* Uppercase name with dot after for online/offline status */
     position: absolute;
     top: -20px;
     left: 10px;
     font-size: 12px;
     font-weight: bold;
-    color: white; /* Name and bullet in white */
+    color: white;
+}
+
+#messages li.received.offline::before {
+    color: red; /* Red dot when friend is offline */
+}
+
+#messages li.received.online::before {
+    color: green; /* Green dot when friend is online */
 }
 
 /* Timestamps outside the message bubble */
@@ -100,7 +116,7 @@ header {
     bottom: -20px; /* Move the timestamp below the message bubble */
 }
 
-/* Input area styling similar to ChatGPT */
+/* Input area styling */
 footer {
     background-color: #202123;
     padding: 10px;
@@ -111,12 +127,12 @@ footer {
 
 .input-container {
     width: 100%;
-    max-width: 750px; /* Ensures the input bar matches the desired width */
+    max-width: 950px; /* Made the input bar wider */
     display: flex;
     align-items: center;
-    background-color: #303136; /* Match the color from the image */
+    background-color: #303136;
     border-radius: 24px; /* Rounded input bar */
-    padding: 10px 15px; /* Adjusted padding for a better fit */
+    padding: 10px 15px;
 }
 
 #message-input {
@@ -127,12 +143,12 @@ footer {
     border: none;
     border-radius: 12px;
     margin-right: 10px;
-    font-size: 14px; /* Adjusted font size for a better fit */
+    font-size: 14px;
 }
 
 /* Tweak the input placeholder style */
 #message-input::placeholder {
-    color: #9a9a9a; /* Lighter placeholder color */
+    color: #9a9a9a;
     font-size: 14px;
 }
 
@@ -151,18 +167,18 @@ button {
 button img {
     width: 24px;
     height: 24px;
-    filter: brightness(0.8); /* Match the icon style */
+    filter: brightness(0) invert(1); /* Changed icon color to white */
 }
 
 button:hover img {
-    filter: brightness(1); /* Brighten on hover to give feedback */
+    filter: brightness(1) invert(0.8); /* Hover effect to slightly brighten the icon */
 }
 
 /* Specific styling for the attachment button */
 #file-btn {
     background-color: transparent;
     border: none;
-    margin-right: 10px; /* Add some space between the attachment button and input field */
+    margin-right: 10px;
 }
 
 /* Specific styling for the send button */

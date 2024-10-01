@@ -1,12 +1,15 @@
 // public/script.js
 
 const socket = io();
-let username = window.location.href.includes('user_1') ? 'user_1' : 'user_2'; // Identify the user based on URL
+let username = window.location.href.includes('user_1') ? 'user_1' : 'user_2';
 const form = document.getElementById('chat-form');
 const input = document.getElementById('message-input');
 const fileInput = document.getElementById('file-input');
 const messages = document.getElementById('messages');
 const fileBtn = document.getElementById('file-btn');
+
+// Track user connection status
+let isUserOnline = { user_1: false, user_2: false };
 
 // Handle file button click
 fileBtn.addEventListener('click', () => {
@@ -53,8 +56,33 @@ form.addEventListener('submit', (e) => {
 socket.on('chatMessage', (msg) => {
     const li = document.createElement('li');
     li.classList.add(msg.user === username ? 'sent' : 'received');
+    li.classList.add(isUserOnline[msg.user] ? 'online' : 'offline');
     li.setAttribute('data-user', msg.user);
     li.innerHTML = `${msg.text} ${msg.file ? `<br><i>File: <a href="${msg.file.data}" download="${msg.file.name}">${msg.file.name}</a></i>` : ''}<div class="timestamp">${msg.time}</div>`;
     messages.appendChild(li);
     messages.scrollTop = messages.scrollHeight;
+});
+
+// Handle user connection status
+socket.on('userStatus', (status) => {
+    isUserOnline = status;
+    // Update the online/offline status of all messages
+    document.querySelectorAll('li').forEach((li) => {
+        const user = li.getAttribute('data-user');
+        if (isUserOnline[user]) {
+            li.classList.add('online');
+            li.classList.remove('offline');
+        } else {
+            li.classList.add('offline');
+            li.classList.remove('online');
+        }
+    });
+});
+
+// Emit user status when connected
+socket.emit('userConnected', username);
+
+// Handle user disconnect
+socket.on('disconnect', () => {
+    socket.emit('userDisconnected', username);
 });
