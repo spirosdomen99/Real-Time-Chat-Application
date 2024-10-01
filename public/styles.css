@@ -150,14 +150,16 @@ button:hover img {
     align-self: flex-end;
     background-color: #ffffff;
     color: black;
+    position: relative;
 }
 
 #messages li.sent.show-name .name {
-    position: relative;
+    position: absolute;
+    top: -20px;
+    right: 0;
     font-size: 12px;
     font-weight: bold;
-    color: white;
-    text-align: right;
+    color: #4a90e2; /* Light blue for 'ME' on the right */
 }
 
 #messages li.sent.online .dot {
@@ -173,14 +175,16 @@ button:hover img {
     align-self: flex-start;
     background-color: #4a90e2;
     color: white;
+    position: relative;
 }
 
 #messages li.received.show-name .name {
-    position: relative;
+    position: absolute;
+    top: -20px;
+    left: 0;
     font-size: 12px;
     font-weight: bold;
-    color: white;
-    text-align: left;
+    color: white; /* Keep 'FRIEND' in white */
 }
 
 #messages li.received.online .dot {
@@ -196,9 +200,16 @@ button:hover img {
     font-size: 10px;
     font-weight: bold;
     color: #c5c6c7;
+    position: absolute;
+    bottom: -20px; /* Positioned below the message bubble */
+    right: 0;
     text-align: right;
-    margin-top: 5px;
     display: block;
+}
+
+/* Hide timestamps for non-final messages in a group */
+#messages li:not(.last-in-group) .timestamp {
+    display: none;
 }
 
 /* Footer and Chat Input Bar */

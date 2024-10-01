@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // DOM Elements
     const emojiBtn = document.getElementById('emoji-btn');
     const emojiPicker = document.getElementById('emoji-picker');
     const input = document.getElementById('message-input');
@@ -10,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // User status
     let username = window.location.href.includes('user_1') ? 'user_1' : 'user_2';
-    let isUserOnline = { user_1: false, user_2: false };
+    let isUserOnline = { user_1: true, user_2: true }; // Assuming both users are online for demo
 
     // Emojis to display in the picker
     const emojis = ['😊', '😂', '😍', '😢', '😡', '😱', '👍', '👎', '🔥', '❤️'];
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     emojis.forEach(emoji => {
         const emojiButton = document.createElement('button');
         emojiButton.textContent = emoji;
-        emojiButton.classList.add('emoji');
+        emojiButton.classList.add('emoji'); // Optional for styling
         emojiButton.onclick = () => {
             input.value += emoji;
             emojiPicker.style.display = 'none'; // Hide emoji picker after selection
@@ -41,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.click();
     });
 
-    // Socket.io connection
+    // Socket.io connection (assuming it's set up)
     const socket = io();
 
     // Submit chat message
@@ -58,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 time: timeString
             };
 
-            // If a file is selected, send the file as base64
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
                 const reader = new FileReader();
@@ -87,47 +85,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = document.createElement('li');
         li.classList.add(msg.user === username ? 'sent' : 'received');
         li.classList.add(isUserOnline[msg.user] ? 'online' : 'offline');
-        
+
         const nameHTML = `<span class="name">${msg.user === username ? 'ME' : 'FRIEND'} <span class="dot">●</span></span>`;
 
-        // Check if the last message is from a different user
         const lastMessage = messages.lastElementChild;
         if (!lastMessage || lastMessage.getAttribute('data-user') !== msg.user) {
-            li.classList.add('show-name'); // Show name if it's a new user or first message
+            li.classList.add('show-name');
             li.innerHTML = `${nameHTML}<br>${msg.text}`;
         } else {
+            lastMessage.classList.remove('last-in-group'); // Remove last-in-group from the previous message
             li.innerHTML = `${msg.text}`;
         }
 
-        // Add timestamp
+        li.classList.add('last-in-group'); // Mark this as the last in the group
         li.innerHTML += `<div class="timestamp">${msg.time}</div>`;
 
         li.setAttribute('data-user', msg.user);
-
         messages.appendChild(li);
         messages.scrollTop = messages.scrollHeight; // Scroll to the bottom of the chat
-    });
-
-    // Handle user connection status updates
-    socket.on('userStatus', (status) => {
-        isUserOnline = status;
-        document.querySelectorAll('li').forEach((li) => {
-            const user = li.getAttribute('data-user');
-            if (isUserOnline[user]) {
-                li.classList.add('online');
-                li.classList.remove('offline');
-            } else {
-                li.classList.add('offline');
-                li.classList.remove('online');
-            }
-        });
-    });
-
-    // Emit user connection event when connected
-    socket.emit('userConnected', username);
-
-    // Handle user disconnect event
-    socket.on('disconnect', () => {
-        socket.emit('userDisconnected', username);
     });
 });
