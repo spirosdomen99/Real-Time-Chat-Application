@@ -101,13 +101,14 @@ button:hover img {
 .emoji-picker {
     display: none; /* Initially hidden */
     position: absolute;
-    bottom: 40px; /* Slightly above the emoji button */
-    left: 50%; /* Align it with the center of the emoji button */
+    bottom: 18.5%;
+    left: 71%; /* Align it with the center of the emoji button */
     transform: translateX(-50%); /* Center it properly */
     background-color: #303136;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    flex-direction: row; /* Ensure emojis are laid out in a row */
     display: flex; /* Display emojis in a row */
     justify-content: center;
     z-index: 10; /* Make sure it stays on top of other elements */
