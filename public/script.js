@@ -8,27 +8,15 @@ const fileInput = document.getElementById('file-input');
 const messages = document.getElementById('messages');
 const emojiBtn = document.getElementById('emoji-btn');
 const emojiPicker = document.getElementById('emoji-picker');
+const fileBtn = document.getElementById('file-btn');
 const sendBtn = document.getElementById('send-btn');
 
-// Emoji options
-const emojis = ['😊', '😂', '😍', '😢', '👍', '🙏', '🎉', '🔥'];
-
-// Generate emoji picker buttons
-emojis.forEach(emoji => {
-    const emojiButton = document.createElement('button');
-    emojiButton.textContent = emoji;
-    emojiButton.onclick = () => {
-        input.value += emoji;
-    };
-    emojiPicker.appendChild(emojiButton);
+// Handle file button click
+fileBtn.addEventListener('click', () => {
+    fileInput.click(); // Trigger file input dialog
 });
 
-// Toggle emoji picker visibility
-emojiBtn.addEventListener('click', () => {
-    emojiPicker.style.display = emojiPicker.style.display === 'block' ? 'none' : 'block';
-});
-
-// Send chat message
+// Send chat message (including file if selected)
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (input.value || fileInput.files.length > 0) {
@@ -36,21 +24,38 @@ form.addEventListener('submit', (e) => {
             text: input.value,
             user: username,
             time: new Date().toLocaleTimeString(),
-            file: fileInput.files.length ? fileInput.files[0].name : null
         };
-        socket.emit('chatMessage', message);
-        input.value = '';
-        fileInput.value = '';
-        emojiPicker.style.display = 'none';
+
+        // If a file is selected, convert it to base64 and send it
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function () {
+                message.file = {
+                    name: file.name,
+                    data: reader.result, // Base64-encoded file data
+                    type: file.type
+                };
+                socket.emit('chatMessage', message); // Send message with file
+                fileInput.value = ''; // Clear file input
+            };
+
+            reader.readAsDataURL(file); // Convert file to base64
+        } else {
+            socket.emit('chatMessage', message); // Send message without file
+        }
+
+        input.value = ''; // Clear input field
     }
 });
 
-// Display chat message
+// Receive and display chat message (including file if attached)
 socket.on('chatMessage', (msg) => {
     const li = document.createElement('li');
     li.classList.add(msg.user === username ? 'sent' : 'received');
     li.setAttribute('data-user', msg.user);
-    li.innerHTML = `${msg.text} ${msg.file ? `<br><i>File: ${msg.file}</i>` : ''}<div class="timestamp">${msg.time}</div>`;
+    li.innerHTML = `${msg.text} ${msg.file ? `<br><i>File: <a href="${msg.file.data}" download="${msg.file.name}">${msg.file.name}</a></i>` : ''}<div class="timestamp">${msg.time}</div>`;
     messages.appendChild(li);
     messages.scrollTop = messages.scrollHeight;
 });
