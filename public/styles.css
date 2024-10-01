@@ -98,6 +98,7 @@ footer {
 /* Button styling similar to ChatGPT */
 button {
     background-color: transparent;
+    color:#e0e0e0;
     border: none;
     padding: 0;
     margin: 0 8px;
