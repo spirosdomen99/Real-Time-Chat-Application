@@ -1,36 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const socket = io();
-    let username = window.location.href.includes('user_1') ? 'user_1' : 'user_2';
-    const form = document.getElementById('chat-form');
-    const input = document.getElementById('message-input');
-    const fileInput = document.getElementById('file-input');
-    const messages = document.getElementById('messages');
-    const fileBtn = document.getElementById('file-btn');
+    // DOM Elements
     const emojiBtn = document.getElementById('emoji-btn');
     const emojiPicker = document.getElementById('emoji-picker');
+    const input = document.getElementById('message-input');
+    const form = document.getElementById('chat-form');
+    const fileInput = document.getElementById('file-input');
+    const fileBtn = document.getElementById('file-btn');
+    const messages = document.getElementById('messages');
 
-    // Track user connection status
+    // User status
+    let username = window.location.href.includes('user_1') ? 'user_1' : 'user_2';
     let isUserOnline = { user_1: false, user_2: false };
 
-    // Handle file button click
-    fileBtn.addEventListener('click', () => {
-        fileInput.click(); // Open file input dialog
-    });
-
-    // Handle emoji button click (toggle emoji picker visibility)
-    emojiBtn.addEventListener('click', () => {
-        emojiPicker.style.display = emojiPicker.style.display === 'block' ? 'none' : 'block'; // Toggle display
-    });
-
-    // Define emojis to be displayed
+    // Emojis to display in the picker
     const emojis = ['😊', '😂', '😍', '😢', '😡', '😱', '👍', '👎', '🔥', '❤️'];
 
-    // Clear any existing emoji buttons and generate emoji picker buttons
-    emojiPicker.innerHTML = ''; 
+    // Initialize: Ensure emoji picker is hidden
+    emojiPicker.style.display = 'none';
+
+    // Toggle emoji picker visibility on button click
+    emojiBtn.addEventListener('click', () => {
+        emojiPicker.style.display = emojiPicker.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Generate emoji picker buttons dynamically
+    emojiPicker.innerHTML = ''; // Clear any existing content
     emojis.forEach(emoji => {
         const emojiButton = document.createElement('button');
         emojiButton.textContent = emoji;
-        emojiButton.classList.add('emoji'); // Add a class for styling if needed
+        emojiButton.classList.add('emoji'); // Optional for styling
         emojiButton.onclick = () => {
             input.value += emoji;
             emojiPicker.style.display = 'none'; // Hide emoji picker after selection
@@ -38,64 +36,73 @@ document.addEventListener('DOMContentLoaded', () => {
         emojiPicker.appendChild(emojiButton);
     });
 
-    // Send chat message (including file if selected)
+    // Handle file input click
+    fileBtn.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    // Socket.io connection
+    const socket = io();
+
+    // Submit chat message
     form.addEventListener('submit', (e) => {
         e.preventDefault();
+
         if (input.value || fileInput.files.length > 0) {
             const now = new Date();
-            const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`; // Format HH:MM
+            const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
             const message = {
                 text: input.value,
                 user: username,
-                time: timeString,
+                time: timeString
             };
 
-            // If a file is selected, convert it to base64 and send it
+            // If a file is selected, send the file as base64
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
                 const reader = new FileReader();
 
-                reader.onload = function () {
+                reader.onload = () => {
                     message.file = {
                         name: file.name,
                         data: reader.result, // Base64-encoded file data
                         type: file.type
                     };
-                    socket.emit('chatMessage', message); // Send message with file
+                    socket.emit('chatMessage', message);
                     fileInput.value = ''; // Clear the file input
                 };
 
-                reader.readAsDataURL(file); // Convert file to base64
+                reader.readAsDataURL(file);
             } else {
-                socket.emit('chatMessage', message); // Send message without file
+                socket.emit('chatMessage', message);
             }
 
-            input.value = ''; // Clear input field
+            input.value = ''; // Clear message input field
         }
     });
 
-    // Receive and display chat message (including file if attached)
+    // Receive and display chat message
     socket.on('chatMessage', (msg) => {
         const li = document.createElement('li');
         li.classList.add(msg.user === username ? 'sent' : 'received');
         li.classList.add(isUserOnline[msg.user] ? 'online' : 'offline');
-
-        // Check if the last message was from the same user
+        
+        // Check if the last message is from a different user
         const lastMessage = messages.lastElementChild;
         if (!lastMessage || lastMessage.getAttribute('data-user') !== msg.user) {
-            li.classList.add('show-name'); // Show name and timestamp if it's the first message from this user
+            li.classList.add('show-name'); // Show name if it's a new user or first message
         }
 
         li.setAttribute('data-user', msg.user);
         li.innerHTML = `${msg.text} ${msg.file ? `<br><i>File: <a href="${msg.file.data}" download="${msg.file.name}">${msg.file.name}</a></i>` : ''}<div class="timestamp">${msg.time}</div>`;
         messages.appendChild(li);
-        messages.scrollTop = messages.scrollHeight;
+        messages.scrollTop = messages.scrollHeight; // Scroll to the bottom of the chat
     });
 
-    // Handle user connection status
+    // Handle user connection status updates
     socket.on('userStatus', (status) => {
         isUserOnline = status;
-        // Update the online/offline status of all messages
         document.querySelectorAll('li').forEach((li) => {
             const user = li.getAttribute('data-user');
             if (isUserOnline[user]) {
@@ -108,10 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Emit user status when connected
+    // Emit user connection event when connected
     socket.emit('userConnected', username);
 
-    // Handle user disconnect
+    // Handle user disconnect event
     socket.on('disconnect', () => {
         socket.emit('userDisconnected', username);
     });
