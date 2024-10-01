@@ -28,7 +28,7 @@ header {
     border-bottom: 1px solid #565869;
 }
 
-form{
+form {
     width: 75%;
 }
 
@@ -128,6 +128,11 @@ form{
     left: 0; /* Far left for received messages */
 }
 
+/* Hide timestamps for consecutive messages by the same user */
+#messages li:not(.show-name) .timestamp {
+    display: none; /* Hide timestamps for grouped messages */
+}
+
 /* Input area styling */
 footer {
     background-color: #202123;
@@ -178,7 +183,6 @@ footer {
 #emoji-btn:hover img {
     filter: brightness(1) invert(0.8); /* Hover effect for emoji button */
 }
-
 
 .emoji-picker {
     display: none;
