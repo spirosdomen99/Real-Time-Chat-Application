@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         li.classList.add(msg.user === username ? 'sent' : 'received');
         li.classList.add(isUserOnline[msg.user] ? 'online' : 'offline');
     
-        const nameHTML = `<span class="name">${msg.user === username ? 'ME' : 'FRIEND'} <span class="dot"> ●</span></span>`;
+        const nameHTML = `<span class="name">${msg.user === username ? 'ME' : 'FRIEND'} <span class="dot">●</span></span><br>`;
     
         const lastMessage = messages.lastElementChild;
         if (!lastMessage || lastMessage.getAttribute('data-user') !== msg.user) {
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const fileLink = document.createElement('a');
             fileLink.href = msg.file.data;  // The Base64 data or file URL
             fileLink.download = msg.file.name;  // The file name for download
-            fileLink.textContent = `🡇 ${msg.file.name}`;  // Display text for the download link
+            fileLink.textContent = `🡇 ${msg.file.name} 🡇`;  // Display text for the download link
             li.appendChild(fileLink);  // Add the file download link to the message element
         }
     
