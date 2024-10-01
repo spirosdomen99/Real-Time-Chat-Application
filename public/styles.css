@@ -96,27 +96,27 @@ button:hover img {
     margin-left: 10px;
 }
 
-/* Emoji Picker Styling */
+/* Emoji picker styling */
 .emoji-picker {
     display: none; /* Initially hidden */
     position: absolute;
-    bottom: 60px; /* Position above the input bar */
-    right: 10px;  /* Adjust as needed */
+    bottom: 50px; /* Place it directly above the emoji button */
+    left: 0; /* Align it with the left side of the emoji button */
     background-color: #303136;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    max-width: 300px;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr); /* 6 emojis per row */
-    grid-gap: 5px;
-    z-index: 10; /* Ensure it appears above other elements */
+    max-width: none; /* Allow the bar to expand horizontally */
+    display: flex; /* Align emojis horizontally */
+    justify-content: center;
+    z-index: 10; /* Ensure it stays above other elements */
 }
 
 .emoji-picker button.emoji {
     background-color: transparent;
     border: none;
     font-size: 24px;
+    margin: 0 5px; /* Spacing between emojis */
     cursor: pointer;
 }
 
