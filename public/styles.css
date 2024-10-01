@@ -147,12 +147,6 @@ button:hover img {
 }
 
 /* Sent Messages (right) */
-#messages li.sent {
-    align-self: flex-end;
-    background-color: #ffffff; /* White background for sent messages */
-    color: black;
-}
-
 #messages li.sent.show-name::before {
     content: '● ME'; /* Dot before "ME" */
     position: absolute;
@@ -160,25 +154,30 @@ button:hover img {
     right: 0;
     font-size: 12px;
     font-weight: bold;
-    color: white; /* Name remains white */
-}
-
-#messages li.sent.offline::before {
-    color: red; /* Red dot for offline */
+    color: white; /* Ensure name stays white */
 }
 
 #messages li.sent.online::before {
-    color: green; /* Green dot for online */
+    content: '● ME'; /* Dot before "ME" */
+    position: absolute;
+    top: -20px;
+    right: 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: green; /* Green dot for online status */
+}
+
+#messages li.sent.offline::before {
+    content: '● ME'; /* Dot before "ME" */
+    position: absolute;
+    top: -20px;
+    right: 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: red; /* Red dot for offline status */
 }
 
 /* Received Messages (left) */
-#messages li.received {
-    align-self: flex-start;
-    background-color: #4a90e2; /* Blue background for received messages */
-    color: white;
-    position: relative;
-}
-
 #messages li.received.show-name::before {
     content: 'FRIEND ●'; /* Dot after "FRIEND" */
     position: absolute;
@@ -186,16 +185,29 @@ button:hover img {
     left: 10px;
     font-size: 12px;
     font-weight: bold;
-    color: white; /* Name remains white */
-}
-
-#messages li.received.offline::before {
-    color: red; /* Red dot for offline */
+    color: white; /* Ensure name stays white */
 }
 
 #messages li.received.online::before {
-    color: green; /* Green dot for online */
+    content: 'FRIEND ●'; /* Dot after "FRIEND" */
+    position: absolute;
+    top: -20px;
+    left: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: green; /* Green dot for online status */
 }
+
+#messages li.received.offline::before {
+    content: 'FRIEND ●'; /* Dot after "FRIEND" */
+    position: absolute;
+    top: -20px;
+    left: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: red; /* Red dot for offline status */
+}
+
 
 /* Timestamps */
 .timestamp {

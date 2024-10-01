@@ -92,13 +92,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const lastMessage = messages.lastElementChild;
         if (!lastMessage || lastMessage.getAttribute('data-user') !== msg.user) {
             li.classList.add('show-name'); // Show name if it's a new user or first message
+        } else {
+            lastMessage.querySelector('.timestamp').style.display = 'none'; // Hide timestamp for non-final messages
         }
 
         li.setAttribute('data-user', msg.user);
-        li.innerHTML = `${msg.text} ${msg.file ? `<br><i>File: <a href="${msg.file.data}" download="${msg.file.name}">${msg.file.name}</a></i>` : ''}<div class="timestamp">${msg.time}</div>`;
+        li.innerHTML = `
+            ${msg.text} 
+            ${msg.file ? `<br><i>File: <a href="${msg.file.data}" download="${msg.file.name}">${msg.file.name}</a></i>` : ''}
+            <div class="timestamp">${msg.time}</div>
+        `;
+        
         messages.appendChild(li);
         messages.scrollTop = messages.scrollHeight; // Scroll to the bottom of the chat
     });
+
 
     // Handle user connection status updates
     socket.on('userStatus', (status) => {
