@@ -40,9 +40,9 @@ form {
 }
 
 .input-container {
-    position: relative; /* Ensure the emoji picker is positioned relative to this container */
+    position: relative;
     width: 100%;
-    max-width: 950px;
+    max-width: 950px; /* Adjust width of input bar */
     display: flex;
     align-items: center;
     background-color: #303136;
@@ -118,14 +118,13 @@ button:hover img {
     background-color: transparent;
     border: none;
     font-size: 24px;
-    margin: 0 5px;
+    margin: 0 5px; /* Add space between emojis */
     cursor: pointer;
 }
 
 .emoji-picker button.emoji:hover {
     opacity: 0.8;
 }
-
 
 /* Messages Display Area */
 #messages {
@@ -148,7 +147,7 @@ button:hover img {
 
 /* Sent Messages (right) */
 #messages li.sent.show-name::before {
-    content: '●'; /* Only the dot is in the pseudo-element */
+    content: '●'; /* Dot only */
     position: absolute;
     top: -20px;
     right: 20px;
@@ -162,7 +161,7 @@ button:hover img {
     right: 0;
     font-size: 12px;
     font-weight: bold;
-    color: white; /* Name stays white */
+    color: white; /* Ensure name stays white */
 }
 
 #messages li.sent.online::before {
@@ -175,7 +174,7 @@ button:hover img {
 
 /* Received Messages (left) */
 #messages li.received.show-name::before {
-    content: '●'; /* Only the dot is in the pseudo-element */
+    content: '●'; /* Dot only */
     position: absolute;
     top: -20px;
     left: 10px;
@@ -189,7 +188,7 @@ button:hover img {
     left: 30px;
     font-size: 12px;
     font-weight: bold;
-    color: white; /* Name stays white */
+    color: white; /* Ensure name stays white */
 }
 
 #messages li.received.online::before {
@@ -199,8 +198,6 @@ button:hover img {
 #messages li.received.offline::before {
     color: red; /* Red dot for offline status */
 }
-
-
 
 /* Timestamps */
 .timestamp {
@@ -234,4 +231,3 @@ footer {
     display: flex;
     justify-content: center;
 }
-
