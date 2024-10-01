@@ -6,120 +6,95 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('file-input');
     const fileBtn = document.getElementById('file-btn');
     const messages = document.getElementById('messages');
-    const filePreview = document.createElement('div'); // To show file preview
-    filePreview.id = 'file-preview';
-    document.querySelector('.input-container').appendChild(filePreview);
+    let selectedFile = null;
 
-    // User status
-    let username = window.location.href.includes('user_1') ? 'user_1' : 'user_2';
-    let isUserOnline = { user_1: true, user_2: true }; // Assuming both users are online for demo
-
-    // Emojis to display in the picker
-    const emojis = ['😊', '😂', '😍', '😢', '😡', '😱', '👍', '👎', '🔥', '❤️'];
-
-    // Initialize: Ensure emoji picker is hidden
-    emojiPicker.style.display = 'none';
-
-    // Toggle emoji picker visibility on button click
+    // Handle emoji picker
     emojiBtn.addEventListener('click', () => {
         emojiPicker.style.display = emojiPicker.style.display === 'block' ? 'none' : 'block';
     });
 
-    // Generate emoji picker buttons dynamically
-    emojiPicker.innerHTML = ''; // Clear any existing content
-    emojis.forEach(emoji => {
-        const emojiButton = document.createElement('button');
-        emojiButton.textContent = emoji;
-        emojiButton.classList.add('emoji'); // Optional for styling
-        emojiButton.onclick = () => {
-            input.value += emoji;
-            emojiPicker.style.display = 'none'; // Hide emoji picker after selection
-        };
-        emojiPicker.appendChild(emojiButton);
-    });
-
-    // Handle file input click
+    // Handle file button click
     fileBtn.addEventListener('click', () => {
         fileInput.click();
     });
 
-    // Display file preview once selected
+    // When a file is selected, show the file preview above the attachment button
     fileInput.addEventListener('change', () => {
         if (fileInput.files.length > 0) {
-            const file = fileInput.files[0];
-            filePreview.innerHTML = `<p>Selected file: ${file.name}</p>`;
-        } else {
-            filePreview.innerHTML = ''; // Clear preview if no file is selected
+            selectedFile = fileInput.files[0];
+            const existingPreview = document.querySelector('.file-preview');
+            if (existingPreview) {
+                existingPreview.remove(); // Remove the old preview if any
+            }
+
+            const filePreview = document.createElement('div');
+            filePreview.classList.add('file-preview');
+            filePreview.textContent = `Selected file: ${selectedFile.name} (Ready to send)`;
+            document.querySelector('.input-container').appendChild(filePreview);
         }
     });
 
-    // Socket.io connection (assuming it's set up)
+    // Socket.io connection
     const socket = io();
 
-    // Submit chat message
+    // Submit chat message or file
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-
-        if (input.value || fileInput.files.length > 0) {
+        if (input.value || selectedFile) {
             const now = new Date();
             const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
 
             const message = {
                 text: input.value,
-                user: username,
+                user: window.location.href.includes('user_1') ? 'user_1' : 'user_2',
                 time: timeString
             };
 
-            // Handle file upload
-            if (fileInput.files.length > 0) {
-                const file = fileInput.files[0];
+            if (selectedFile) {
                 const reader = new FileReader();
-
                 reader.onload = () => {
                     message.file = {
-                        name: file.name,
-                        data: reader.result, // Base64-encoded file data
-                        type: file.type
+                        name: selectedFile.name,
+                        data: reader.result,
+                        type: selectedFile.type
                     };
-                    socket.emit('chatMessage', message); // Send message with file
+                    socket.emit('chatMessage', message);
+                    selectedFile = null; // Clear the file after sending
+                    document.querySelector('.file-preview').remove(); // Remove file preview after sending
                     fileInput.value = ''; // Clear the file input
-                    filePreview.innerHTML = ''; // Clear the file preview
                 };
-
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(selectedFile);
             } else {
-                socket.emit('chatMessage', message); // Send message without file
+                socket.emit('chatMessage', message);
             }
 
-            input.value = ''; // Clear message input field
+            input.value = ''; // Clear the input field
         }
     });
 
     // Receive and display chat message
     socket.on('chatMessage', (msg) => {
         const li = document.createElement('li');
-        li.classList.add(msg.user === username ? 'sent' : 'received');
-        li.classList.add(isUserOnline[msg.user] ? 'online' : 'offline');
+        li.classList.add(msg.user === window.location.href.includes('user_1') ? 'sent' : 'received');
 
-        const nameHTML = `<span class="name">${msg.user === username ? 'ME' : 'FRIEND'} <span class="dot">●</span></span>`;
-
-        const lastMessage = messages.lastElementChild;
-        if (!lastMessage || lastMessage.getAttribute('data-user') !== msg.user) {
-            li.classList.add('show-name');
-            li.innerHTML = `${nameHTML}<br>${msg.text}`;
-        } else {
-            lastMessage.classList.remove('last-in-group'); // Remove last-in-group from the previous message
-            li.innerHTML = `${msg.text}`;
+        if (msg.text) {
+            li.innerHTML = msg.text;
         }
 
-        li.classList.add('last-in-group'); // Mark this as the last in the group
         if (msg.file) {
-            li.innerHTML += `<br><i>File: <a href="${msg.file.data}" download="${msg.file.name}">${msg.file.name}</a></i>`;
+            const fileLink = document.createElement('a');
+            fileLink.href = msg.file.data;
+            fileLink.download = msg.file.name;
+            fileLink.textContent = `Download ${msg.file.name}`;
+            li.appendChild(fileLink);
         }
-        li.innerHTML += `<div class="timestamp">${msg.time}</div>`;
 
-        li.setAttribute('data-user', msg.user);
+        const timestamp = document.createElement('div');
+        timestamp.classList.add('timestamp');
+        timestamp.textContent = msg.time;
+        li.appendChild(timestamp);
+
         messages.appendChild(li);
-        messages.scrollTop = messages.scrollHeight; // Scroll to the bottom of the chat
+        messages.scrollTop = messages.scrollHeight; // Scroll to the bottom
     });
 });
