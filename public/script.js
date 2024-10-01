@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const fileLink = document.createElement('a');
             fileLink.href = msg.file.data;  // The Base64 data or file URL
             fileLink.download = msg.file.name;  // The file name for download
-            fileLink.textContent = `Download ${msg.file.name}`;  // Display text for the download link
+            fileLink.textContent = `🡇 ${msg.file.name}`;  // Display text for the download link
             li.appendChild(fileLink);  // Add the file download link to the message element
         }
     
