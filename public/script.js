@@ -104,23 +104,37 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = document.createElement('li');
         li.classList.add(msg.user === username ? 'sent' : 'received');
         li.classList.add(isUserOnline[msg.user] ? 'online' : 'offline');
-
+    
         const nameHTML = `<span class="name">${msg.user === username ? 'ME' : 'FRIEND'} <span class="dot">●</span></span>`;
-
+    
         const lastMessage = messages.lastElementChild;
         if (!lastMessage || lastMessage.getAttribute('data-user') !== msg.user) {
             li.classList.add('show-name');
-            li.innerHTML = `${nameHTML}<br>${msg.text}`;
+            li.innerHTML = `${nameHTML}<br>`;
         } else {
             lastMessage.classList.remove('last-in-group'); // Remove last-in-group from the previous message
-            li.innerHTML = `${msg.text}`;
         }
-
+    
+        // Append message text if exists
+        if (msg.text) {
+            li.innerHTML += `${msg.text}<br>`;
+        }
+    
+        // Append file download link if a file was sent
+        if (msg.file) {
+            const fileLink = document.createElement('a');
+            fileLink.href = msg.file.data;  // The Base64 data or file URL
+            fileLink.download = msg.file.name;  // The file name for download
+            fileLink.textContent = `Download ${msg.file.name}`;  // Display text for the download link
+            li.appendChild(fileLink);  // Add the file download link to the message element
+        }
+    
         li.classList.add('last-in-group'); // Mark this as the last in the group
         li.innerHTML += `<div class="timestamp">${msg.time}</div>`;
-
+    
         li.setAttribute('data-user', msg.user);
         messages.appendChild(li);
         messages.scrollTop = messages.scrollHeight; // Scroll to the bottom of the chat
     });
+    
 });
