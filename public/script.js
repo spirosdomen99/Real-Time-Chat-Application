@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (!lastMessage || lastMessage.getAttribute('data-user') !== msg.user) {
             li.classList.add('show-name');
-            li.innerHTML = `${nameHTML}<br>`;
+            li.innerHTML = `${nameHTML}`;
         } else {
             lastMessage.classList.remove('last-in-group'); // Remove last-in-group from the previous message
         }
