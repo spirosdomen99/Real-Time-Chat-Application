@@ -218,11 +218,6 @@ button:hover img {
     display: none;
 }
 
-/* Padding adjustments for the first message in a group */
-#messages li.show-name {
-    padding-top: 5px; /* Reduce the top padding */
-}
-
 /* Footer and Chat Input Bar */
 footer {
     background-color: #202123;
