@@ -108,6 +108,12 @@ You can also deploy the application online using platforms like **Render**, **He
    - Click on **Deploy**.
    - Render will automatically build your application and provide you with a URL to access it online.
 
+   You can open two tabs or browsers to simulate multiple users chatting in real-time.For example:
+
+   Tab no.1  :  https://real-time-chat-application-f5q9.onrender.com/?user=user_1
+
+   Tab no.2  :  https://real-time-chat-application-f5q9.onrender.com/?user=user_2
+
 ### Deploying on Heroku
 
 1. **Create a Heroku Account**: Go to [heroku.com](https://www.heroku.com/) and create an account (if you don't already have one).
