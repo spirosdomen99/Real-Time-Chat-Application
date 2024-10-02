@@ -144,7 +144,7 @@ button:hover img {
 
 #messages li {
     padding: 10px;
-    margin-bottom: 30px; /* Space between messages */
+    margin-bottom: 20px; /* Space between messages */
     border-radius: 10px;
     max-width: 60%;
     word-wrap: break-word;
@@ -156,16 +156,20 @@ button:hover img {
     align-self: flex-end;
     background-color: #ffffff;
     color: black;
-    position: relative;
+}
+
+/* Name Styling (for first message in a group) */
+#messages li.show-name .name {
+    position: relative; /* Make the name part of the document flow */
+    top: -5px;          /* Slightly move it above the message bubble */
+    margin-bottom: 5px;  /* Add a small gap between the name and message */
+    font-size: 12px;
+    font-weight: bold;
 }
 
 #messages li.sent.show-name .name {
-    position: absolute;
-    top: -20px;
-    right: 0;
-    font-size: 12px;
-    font-weight: bold;
     color: #00ccff; /* Light blue for 'ME' on the right */
+    text-align: right;
 }
 
 #messages li.sent.online .dot {
@@ -181,16 +185,11 @@ button:hover img {
     align-self: flex-start;
     background-color: #c0650a;
     color: white;
-    position: relative;
 }
 
 #messages li.received.show-name .name {
-    position: absolute;
-    top: -20px;
-    left: 0;
-    font-size: 12px;
-    font-weight: bold;
-    color: white; /* Keep 'FRIEND' in white */
+    color: white;  /* White for 'FRIEND' on the left */
+    text-align: left;
 }
 
 #messages li.received.online .dot {
@@ -216,11 +215,6 @@ button:hover img {
 /* Hide timestamps for non-final messages in a group */
 #messages li:not(.last-in-group) .timestamp {
     display: none;
-}
-
-/* Padding adjustments for the first message in a group */
-#messages li.show-name {
-    padding-top: 5px; /* Reduce the top padding */
 }
 
 /* Footer and Chat Input Bar */
