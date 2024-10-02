@@ -101,6 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Receive and display chat message
     socket.on('chatMessage', (msg) => {
+        console.log('Received message:', msg);  // Log when a message is received
+        
         const li = document.createElement('li');
         li.classList.add(msg.user === username ? 'sent' : 'received');
         li.classList.add(isUserOnline[msg.user] ? 'online' : 'offline');
@@ -108,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nameHTML = `<span class="name">${msg.user === username ? 'ME' : 'FRIEND'} <span class="dot">●</span></span><br>`;
     
         const lastMessage = messages.lastElementChild;
+        
         if (!lastMessage || lastMessage.getAttribute('data-user') !== msg.user) {
             li.classList.add('show-name');
             li.innerHTML = `${nameHTML}<br>`;

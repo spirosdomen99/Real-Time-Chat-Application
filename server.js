@@ -30,6 +30,15 @@ io.on('connection', (socket) => {
             }
         }
     });
+
+    socket.on('chatMessage', (msg) => {
+        console.log('Message from client:', msg);  // Log when a message is received
+        io.emit('chatMessage', msg);  // Broadcast the message to all clients
+    });
+
+    socket.on('disconnect', () => {
+        console.log('A user disconnected');
+    });
 });
 
 // Start the server
